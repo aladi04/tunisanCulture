@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Strongly Typed by HTML4 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../view/design.css" />
+	</head>
+
+  <body>
+    <div class="wrapper">
+      <div class="title-text">
+        <div class="title login">Sign up Form</div>
+        <div class="title signup">Sign up Form</div>
+      </div>
+      <div class="form-container">
+        <div class="slide-controls">
+          <input type="radio" name="slide" id="login" checked>
+          <input type="radio" name="slide" id="signup">
+          <label for="login" class="slide login">User</label>
+          <label for="signup" class="slide signup">Admin</label>
+          <div class="slider-tab"></div>
+        </div>
+        <div class="form-inner">
+          <form action="../control/sign.php" method="POST" class="login">
+            <div class="field">
+              <input type="text" name="emailU" placeholder="Email Address" required>
+            </div>
+            <div class="field">
+              <input type="password" name="passwordU" placeholder="Password" required>
+            </div>
+            <div class="pass-link"><a href="#">Forgot password?</a></div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" name="submitU" value="Sign up">
+            </div>
+            <div class="signup-link">Not a User? <a href="">Login as Admin</a></div>
+          </form>
+          <form action="../control/sign.php" method="POST" class="signup">
+            <div class="field">
+              <input type="text" name="emailA" placeholder="Email Address" required>
+            </div>
+            <div class="field">
+              <input type="password" name="passwordA" placeholder="Password" required>
+            </div>
+            <!--
+            <div class="field">
+              <input type="password" placeholder="Confirm password" required>
+            </div>
+            -->
+            <div class="pass-link"><a href="#">Forgot password?</a></div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" name="submitA" value="Sign up">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="../view/script.js"></script>
+  </body>
+
