@@ -23,11 +23,16 @@
         </div>
 
         <div class="form-inner">
-          <!-- User Sign-Up Form -->
           <form id="signUpForm" action="../control/sign.php" method="POST" class="login">
               <div class="field">
                   <input type="text" name="emailU" id="emailU" placeholder="Email Address">
               </div>
+              <div class="field">
+                <input type="text" name="nameU" id="nameU" placeholder="Name">
+            </div>
+            <div class="field">
+                <input type="date" name="dateU" id="dateU" placeholder="Birth Date">
+            </div>
               <div class="field">
                   <input type="password" name="passwordU" id="passwordU" placeholder="Password">
               </div>
@@ -37,15 +42,19 @@
                   <input type="submit" name="submitU" value="Sign up">
               </div>
               <div class="signup-link">Not a User? <a href="">Sign up as Admin</a></div>
-              <!-- Error messages for the User form -->
               <div id="userErrorMessages" style="color: red;"></div>
           </form>
       
-          <!-- Admin Sign-Up Form -->
           <form id="adminSignUpForm" action="../control/sign.php" method="POST" class="signup">
               <div class="field">
                   <input type="text" name="emailA" id="emailA" placeholder="Email Address">
               </div>
+              <div class="field">
+                <input type="text" name="nameA" id="nameA" placeholder="Name">
+            </div>
+            <div class="field">
+                <input type="date" name="dateA" id="dateA" placeholder="Birth Date">
+            </div>
               <div class="field">
                   <input type="password" name="passwordA" id="passwordA" placeholder="Password">
               </div>
@@ -54,7 +63,6 @@
                   <div class="btn-layer"></div>
                   <input type="submit" name="submitA" value="Sign up">
               </div>
-              <!-- Error messages for the Admin form -->
               <div id="adminErrorMessages" style="color: red;"></div>
           </form>
       </div>
@@ -85,50 +93,95 @@
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailPattern.test(email);
         }
-      // Client-side validation for User sign-up form
+
+        function isValidName(name) {
+            const namePattern = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s'-]+$/;
+
+            if (name && namePattern.test(name)) {
+                return true; 
+            } else {
+                return false; 
+            }
+        }
+
+        function isValidPassword(password) {
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#+])[A-Za-z\d@$!%*?&#+]{8,}$/;
+
+            if (passwordPattern.test(password)) {
+                return true; 
+            } else {
+                return false; 
+            }
+        }
+
+        function isValidAdminPassword(password) {
+            const adminCode = "ADMIN2024";
+            const hasAdminCode = password.includes(adminCode);
+            const minLength = 8;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasLowercase = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSymbol = /[\W_]/.test(password); // Matches any non-alphanumeric character (symbol)
+
+            if (!hasAdminCode || password.length < minLength || !hasUppercase || !hasLowercase|| !hasNumber || !hasSymbol) {
+                return false;
+            }
+
+            return true;
+        }
+
+
+
       const userForm = document.getElementById("signUpForm");
       const userErrorMessages = document.getElementById("userErrorMessages");
   
       userForm.addEventListener("submit", function (e) {
           let errors = [];
-          userErrorMessages.innerHTML = ""; // Clear previous error messages
+          userErrorMessages.innerHTML = ""; 
   
           const emailU = document.getElementById("emailU").value.trim();
+          const nameU = document.getElementById("nameU").value.trim();
           const passwordU = document.getElementById("passwordU").value.trim();
   
           if (!emailU || !isValidEmail(emailU)) {
               errors.push("Valid Email is required.");
           }
-          if (!passwordU) {
+          if (!nameU || !isValidName(nameU)) {
+              errors.push("Valid Name is required.");
+          }
+          if (!isValidPassword(passwordU)) {
               errors.push("Valid Password is required.");
           }
   
           if (errors.length > 0) {
-              e.preventDefault(); // Prevent form submission
+              e.preventDefault(); 
               userErrorMessages.innerHTML = errors.join("<br>");
           }
       });
   
-      // Client-side validation for Admin sign-up form
       const adminForm = document.getElementById("adminSignUpForm");
       const adminErrorMessages = document.getElementById("adminErrorMessages");
   
       adminForm.addEventListener("submit", function (e) {
           let errors = [];
-          adminErrorMessages.innerHTML = ""; // Clear previous error messages
+          adminErrorMessages.innerHTML = ""; 
   
           const emailA = document.getElementById("emailA").value.trim();
+          const nameA = document.getElementById("nameA").value.trim();
           const passwordA = document.getElementById("passwordA").value.trim();
   
           if (!emailA || !isValidEmail(emailA)) {
               errors.push("Valid Email is required.");
           }
-          if (!passwordA) {
+          if (!nameA || !isValidName(nameA)) {
+              errors.push("Valid Name is required.");
+          }
+          if (!isValidAdminPassword(passwordA)) {
               errors.push("Valid Password is required.");
           }
   
           if (errors.length > 0) {
-              e.preventDefault(); // Prevent form submission
+              e.preventDefault(); 
               adminErrorMessages.innerHTML = errors.join("<br>");
           }
       });

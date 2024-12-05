@@ -1,6 +1,6 @@
 <?php
 include '../connect.php';
-
+include "../model/user.php";
 
 function showUser($pdo){
     $sql = "SELECT * FROM `user`";
@@ -10,11 +10,11 @@ function showUser($pdo){
     return $users;
 }
 
-function deleteUser($pdo, $email, $id) {
-    $sql = "DELETE FROM `user` WHERE email = :email AND id = :id";
+function deleteUser($pdo, $email) {
+    $sql = "DELETE FROM `user` WHERE email = :email";
     $stm = $pdo->prepare($sql);
     
-    $stm->execute(['email' => $email, 'id' =>$id]);
+    $stm->execute(['email' => $email]);
 
     if ($stm->rowCount() > 0) {
         return "User deleted successfully!";
@@ -24,11 +24,12 @@ function deleteUser($pdo, $email, $id) {
 }
 
 
-function updatePassword($pdo, $email, $password) {
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "UPDATE `user` SET password = :password WHERE email = :email";
+function updatePassword($pdo, $email, $name, $role, $birthDate) {
+    $sql = "UPDATE `user` SET name = :name, role = :role, birth_date = :birthDate WHERE email = :email";
     $params = [
-        ":password" => $hashedPassword,
+        ":name" => $name,
+        ":role" => $role,
+        ":birthDate" => $birthDate,
         ":email" => $email
     ];
 
@@ -47,16 +48,23 @@ function updatePassword($pdo, $email, $password) {
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $pdo = Config::getConnexion();
-    
+    $user = new User();
+
     $users = showUser($pdo);
     if (isset($_POST['submitU'])) {
-        $result = updatePassword($pdo, $_POST["emailU"], $_POST["passwordU"]);
+        $user->setEmail($_POST["emailU"]);
+        $user->setName($_POST["nameU"]);
+        $user->setRole($_POST["roleU"]); 
+        $user->setDate($_POST["dateU"]);
+        $result = updatePassword($pdo, $user->getEmail(), $user->getName(), $user->getRole(), $user->getDate());
         
-    } else if (isset($_POST['submitR'])) {
-        $res =deleteUser($pdo, $_POST["emailR"], $_POST["idR"]);
-    }
+    }else if (isset($_POST['submitD'])){
+        $user->setEmail($_POST["email"]);
+        $res =deleteUser($pdo, $user->getEmail());
 
-    header("Location: ../view/backOfficePage/dashboard/index.php?message=" . urlencode($message));
+    }
+//?message=
+    header("Location: ../view/backOfficePage/dashboard/index.php" . urlencode($message));
     exit();
 }
 

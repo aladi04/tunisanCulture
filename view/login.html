@@ -77,13 +77,13 @@
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailPattern.test(email);
         }
-      // Client-side validation for User Login Form
+      
       const userLoginForm = document.getElementById("userLoginForm");
       const userLoginErrors = document.getElementById("userLoginErrors");
   
       userLoginForm.addEventListener("submit", function (e) {
           let errors = [];
-          userLoginErrors.innerHTML = ""; // Clear previous error messages
+          userLoginErrors.innerHTML = ""; 
   
           const emailU = document.getElementById("emailU").value.trim();
           const passwordU = document.getElementById("passwordU").value.trim();
@@ -96,18 +96,18 @@
           }
   
           if (errors.length > 0) {
-              e.preventDefault(); // Prevent form submission
+              e.preventDefault(); 
               userLoginErrors.innerHTML = errors.join("<br>");
           }
       });
   
-      // Client-side validation for Admin Login Form
+      
       const adminLoginForm = document.getElementById("adminLoginForm");
       const adminLoginErrors = document.getElementById("adminLoginErrors");
   
       adminLoginForm.addEventListener("submit", function (e) {
           let errors = [];
-          adminLoginErrors.innerHTML = ""; // Clear previous error messages
+          adminLoginErrors.innerHTML = ""; 
   
           const emailA = document.getElementById("emailA").value.trim();
           const passwordA = document.getElementById("passwordA").value.trim();
@@ -120,7 +120,7 @@
           }
   
           if (errors.length > 0) {
-              e.preventDefault(); // Prevent form submission
+              e.preventDefault(); 
               adminLoginErrors.innerHTML = errors.join("<br>");
           }
       });

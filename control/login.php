@@ -1,11 +1,12 @@
 <?php
+session_start(); // Start the session at the very beginning
 ob_start();
 include "../connect.php";
+include "../model/user.php";
 include "../view/login.html";
 
 function verifyAcc($pdo, $email, $password) {
-    // Query only the email and hashed password
-    $sql = "SELECT password FROM `user` WHERE email = :email";
+    $sql = "SELECT id, email, password, role FROM `user` WHERE email = :email";
     $stm = $pdo->prepare($sql);
     $stm->execute([":email" => $email]);
     $user = $stm->fetch();
@@ -13,47 +14,58 @@ function verifyAcc($pdo, $email, $password) {
     if ($user) {
         $hashedPassword = $user['password'];
 
-        // Use password_verify to compare the entered password with the hashed one
         if (password_verify($password, $hashedPassword)) {
-            return "User found";
+            return $user; // Return user data on successful verification
         } else {
-            return "Incorrect password";
+            return false; // Incorrect password
         }
     } else {
-        return "User not found";
+        return false; // User not found
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $pdo = Config::getConnexion();
+    $user = new User();
 
     if (isset($_POST['submitU'])) {
         $email = $_POST["emailU"];
         $password = $_POST["passwordU"];
-        $role = 0;
 
-        $res = verifyAcc($pdo, $email, $password);
+        $verifiedUser = verifyAcc($pdo, $email, $password);
         
-        if ($res === "User found") {
-            echo "user found";
-            //header("Location: ../view/backOfficePage/dashboard/index.php");
+        if ($verifiedUser) {
+            // Set session variables
+            $_SESSION['loggedin'] = true;
+            $_SESSION['user_id'] = $verifiedUser['id'];
+            $_SESSION['email'] = $verifiedUser['email'];
+            $_SESSION['role'] = $verifiedUser['role']; // Assuming 'role' determines user/admin
+
+            // Redirect to user dashboard
+            header("Location: ../view/PageAcceuil/index2.php");
             exit();
         } else {
-            echo "User not found";
+            echo "Invalid email or password for user.";
         }
-    }else if (isset($_POST['submitA'])) {
+    } elseif (isset($_POST['submitA'])) {
         $email = $_POST["emailA"];
         $password = $_POST["passwordA"];
-        $role = 1;
 
-        $res = verifyAcc($pdo, $email, $password);
+        $verifiedAdmin = verifyAcc($pdo, $email, $password);
         
-        if ($res === "User found") {
-            echo "admin found";
+        if ($verifiedAdmin && $verifiedAdmin['role'] == 1) { 
+            // Set session variables
+            $_SESSION['loggedin'] = true;
+            $_SESSION['user_id'] = $verifiedAdmin['id'];
+            $_SESSION['email'] = $verifiedAdmin['email'];
+            $_SESSION['role'] = $verifiedAdmin['role'];
+
+            echo "Session started for user: " . $_SESSION['user_email'];
+            // Redirect to admin dashboard
             header("Location: ../view/backOfficePage/dashboard/index.php");
             exit();
         } else {
-            echo "admin not found"; 
+            echo "Invalid email or password for admin.";
         }
     }
 }

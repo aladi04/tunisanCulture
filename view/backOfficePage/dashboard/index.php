@@ -1,6 +1,14 @@
 <?php
   include '../../../connect.php';
 
+  session_start();
+
+  if (!isset($_SESSION['email'])) {
+      header("Location: ../view/login.html");
+      exit();
+  }
+
+
 
   function showUser($pdo){
       $sql = "SELECT * FROM `user`";
@@ -116,9 +124,7 @@
     </style>
 
     
-    <!-- Custom styles for this template -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
   </head>
   <body>
@@ -337,7 +343,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="../../../control/logout.php">
                 <svg class="bi"><use xlink:href="#door-closed"/></svg>
                 Sign out
               </a>
@@ -349,16 +355,9 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-            <svg class="bi"><use xlink:href="#calendar3"/></svg>
-            This week
-          </button>
+        <!--<?php echo "<h1>Welcom Back " . $_SESSION['email'] . "</h1>"; ?>-->
+        <div style="text-align: center; margin-top: 20px; font-family: Arial, sans-serif;">
+            <h1 style="color: #2c3e50; font-size: 2.5em;">Welcome Back, <span style="color: #3498db;"><?php echo htmlspecialchars($_SESSION['email']); ?></span>!</h1>
         </div>
       </div>
 
@@ -366,51 +365,75 @@
 
       <h2>USERS</h2>
       <div class="table-responsive small">
-        <table class="table table-striped table-sm">
-          <thead>
-              <tr>
-                  <th>ID</th>
-                  <th>Email</th>
-                  <th>PASSWORD</th>
-                  <th>Role</th>
-              </tr>
-          </thead>
-          <tbody>           
-                  <?php foreach ($users as $user): ?>
-                      <tr>
-                          <td><?php echo htmlspecialchars($user['id']); ?></td>
-                          <td><?php echo htmlspecialchars($user['email']); ?></td>
-                          <td><?php echo htmlspecialchars($user['password']); ?></td> 
-                          <td><?php echo htmlspecialchars($user['role']); ?></td> 
-                      </tr>
-                  <?php endforeach; ?>
-            
-          </tbody>
-        </table>
+      <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Birth Date</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($users as $user): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($user['email']); ?></td>
+                    <td><?php echo htmlspecialchars($user['name']); ?></td>
+                    <td><?php echo htmlspecialchars($user['birth_date']); ?></td> 
+                    <td><?php echo htmlspecialchars($user['role'] == 1 ? 'Admin' : 'User'); ?></td>
+                    <td>
+                        <!-- Delete Button -->
+                        <form method="POST" action="../../../control/dashboard.php" style="display:inline;">
+                            <input type="hidden" name="email" value="<?php echo htmlspecialchars($user['email']); ?>">
+                            <button type="submit" name="submitD" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+
+                        <!-- Update Button -->
+                        <button 
+                            class="btn btn-primary btn-sm"
+                            onclick="showUpdateForm('<?php echo htmlspecialchars($user['email']); ?>', '<?php echo htmlspecialchars($user['name']); ?>', '<?php echo htmlspecialchars($user['birth_date']); ?>', '<?php echo htmlspecialchars($user['role']); ?>')"
+                        >
+                            Update
+                        </button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+      </table>
+
       </div>
       <section id="users">
         <div class="container">
-          <!-- Form for Remove -->
-          <form action="../../../control/dashboard.php" method="POST" class="hidden" id="remove-form">
-            <h3>Remove User</h3>
-            <input type="hidden" name="action" value="remove">
-            <input name="emailR" id="emailR" placeholder="Enter email">
-            <input type="number" name="idR" id="idR" placeholder="Enter ID">
-            <button type="submit" name="submitR">Remove</button>
-            <div class="error" id="removeErrors"></div>
-          </form>
-    
-          <!-- Form for Update -->
-          <form action="../../../control/dashboard.php" method="POST" class="hidden" id="update-form">
-            <h3>Update User</h3>
-            <input type="hidden" name="action" value="update"> <!-- Action Identifier -->
-            <input name="emailU" id="emailU" placeholder="Enter email">
-            <input type="password" name="passwordU" id="passwordU" placeholder="Enter password">
-            <button type="submit" name="submitU">Update</button>
-            <div class="error" id="updateErrors"></div>
-          </form>
+            <form action="../../../control/dashboard.php" method="POST" class="hidden" id="update-form">
+                <h3>Update User</h3>
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="originalEmail" id="originalEmail">
+                <div>
+                    <label for="emailU">Email:</label>
+                    <input name="emailU" id="emailU" placeholder="Enter email">
+                </div>
+                <div>
+                    <label for="nameU">Name:</label>
+                    <input name="nameU" id="nameU" placeholder="Enter name">
+                </div>
+                <div>
+                    <label for="birthDateU">Birth Date:</label>
+                    <input type="date" name="dateU" id="birthDateU">
+                </div>
+                <div>
+                    <label for="roleU">Role:</label>
+                    <select name="roleU" id="roleU">
+                        <option value="1">Admin</option>
+                        <option value="0">User</option>
+                    </select>
+                </div>
+                <button type="submit" name="submitU">Update</button>
+                <div class="error" id="updateErrors"></div>
+            </form>
         </div>
-      </section>
+    </section>
+
     </main>
   </div>
 </div>
@@ -421,16 +444,15 @@
     return emailPattern.test(email);
 }
 
-// Validation for Remove Form
 const removeForm = document.getElementById("remove-form");
 const removeErrors = document.getElementById("removeErrors");
 
 removeForm.addEventListener("submit", function (e) {
     let errors = [];
-    removeErrors.innerHTML = ""; // Clear previous error messages
+    removeErrors.innerHTML = ""; 
 
     const emailR = document.getElementById("emailR").value.trim();
-    const idR = document.getElementById("idR").value.trim(); // Corrected reference
+    const idR = document.getElementById("idR").value.trim(); 
 
     if (!emailR || !isValidEmail(emailR)) {
         errors.push("Valid email is required.");
@@ -440,18 +462,17 @@ removeForm.addEventListener("submit", function (e) {
     }
 
     if (errors.length > 0) {
-        e.preventDefault(); // Prevent form submission
+        e.preventDefault(); 
         removeErrors.innerHTML = errors.join("<br>");
     }
 });
 
-// Validation for Update Form
 const updateForm = document.getElementById("update-form");
 const updateErrors = document.getElementById("updateErrors");
 
 updateForm.addEventListener("submit", function (e) {
     let errors = [];
-    updateErrors.innerHTML = ""; // Clear previous error messages
+    updateErrors.innerHTML = ""; 
 
     const emailU = document.getElementById("emailU").value.trim();
     const passwordU = document.getElementById("passwordU").value.trim();
@@ -464,10 +485,23 @@ updateForm.addEventListener("submit", function (e) {
     }
 
     if (errors.length > 0) {
-        e.preventDefault(); // Prevent form submission
+        e.preventDefault(); 
         updateErrors.innerHTML = errors.join("<br>");
     }
 });
+
+function showUpdateForm(email, name, birthDate, role) {
+    // Populate the form fields
+    document.getElementById('originalEmail').value = email;
+    document.getElementById('emailU').value = email;
+    document.getElementById('nameU').value = name;
+    document.getElementById('birthDateU').value = birthDate;
+    document.getElementById('roleU').value = role;
+
+    // Show the form
+    document.getElementById('update-form').classList.remove('hidden');
+}
+
 
 </script>
 <style>
