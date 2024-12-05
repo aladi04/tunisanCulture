@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }else if (isset($_POST['submitD'])){
         $user->setEmail($_POST["email"]);
         $res =deleteUser($pdo, $user->getEmail());
-
     }
 //?message=
     header("Location: ../view/backOfficePage/dashboard/index.php" . urlencode($message));
