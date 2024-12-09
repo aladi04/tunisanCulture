@@ -40,7 +40,7 @@ require_once '../../database.php';
             $prix = $produit['prix'];
             $qty = $panier[$idProduit] ?? 1;
 
-            // Calcul du total pour chaque produit
+          
             $totalProduit = $qty * $prix;
             $total += $totalProduit;
 
@@ -72,6 +72,7 @@ require_once '../../database.php';
 
         if ($inserted) {
             $_SESSION['panier'][$idUtilisateur] = [];
+       
             header("location: panier.php?success=true&total=$total");
             exit;
         } else {
@@ -79,10 +80,19 @@ require_once '../../database.php';
         }
     }
 
+   
     if (isset($_GET['success'])) {
         echo '<div class="alert alert-success">Merci ! Votre commande a été validée avec un total de ' . htmlspecialchars($_GET['total']) . ' $.</div>';
     }
     ?>
+   
+    <!-- Afficher le bouton "Procéder aux paiements" si la commande a été validée -->
+    <?php if (isset($_GET['success'])) { ?>
+        <div class="text-center mt-4">
+            <a href="paiement.php?total=<?php echo htmlspecialchars($_GET['total']); ?>" class="btn btn-primary">Procéder aux paiements</a>
+        </div>
+    <?php } ?>
+
     <h4>Panier</h4>
     <div class="container">
         <div class="row">
@@ -108,7 +118,7 @@ require_once '../../database.php';
                         $prix = $produit['prix'];
                         $qty = $panier[$idProduit] ?? 1;
 
-                        // Calcul du total pour chaque produit
+                    
                         $totalProduit = $qty * $prix;
                         $total += $totalProduit;
                         ?>

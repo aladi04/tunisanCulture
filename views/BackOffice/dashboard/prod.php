@@ -357,7 +357,7 @@ session_start();
 <body>
 <?php include 'C:/xampp/htdocs/Projet webb/views/BackOffice/include/nav.php' ?>
 <div class="container py-2">
-    <h4>Bienvenue mon endroit privé </h4>
+    <h4>Bienvenue dans mon endroit privé </h4>
 </div>
 
 </body>

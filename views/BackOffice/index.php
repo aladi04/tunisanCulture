@@ -7,7 +7,7 @@
 <body>
 <?php include 'include/nav.php' ?>
 <div class="container py-2">
-    <h4>Bienvenue mon chou</h4>
+    <h4>Bienvenue </h4>
 </div>
 
 </body>

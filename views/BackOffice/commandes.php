@@ -14,7 +14,7 @@
             <th>#ID</th>
             <th>Client</th>
             <th>Total</th>
-            <th>Date</th>
+           
             <th>Opérations</th>
         </tr>
         </thead>
@@ -28,7 +28,7 @@
                 <td><?php echo $commande['id'] ?></td>
                 <td><?php echo $commande['login'] ?></td>
                 <td><?php echo $commande['total'] ?> <i class="fa fa-solid fa-dollar"></i></td>
-                <td><?php echo $commande['date_creation'] ?></td>
+               
                 <td><a class="btn btn-primary btn-sm" href="commande.php?id=<?php echo $commande['id']?>">Afficher détails</a></td>
             </tr>
             <?php

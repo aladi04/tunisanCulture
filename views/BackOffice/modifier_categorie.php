@@ -18,16 +18,16 @@
     if (isset($_POST['modifier'])) {
         $libelle = $_POST['libelle'];
         $description = $_POST['description'];
-        $icone = $_POST['icone'];
+      
 
         if (!empty($libelle) && !empty($description)) {
             $sqlState = $pdo->prepare('UPDATE categorie
                                                 SET libelle = ? ,
                                                     description = ?,
-                                                    icone = ?
+                                                    
                                             WHERE id = ?
                                             ');
-            $sqlState->execute([$libelle, $description, $icone, $id]);
+            $sqlState->execute([$libelle, $description, $id]);
             header('location: categories.php');
         } else {
             ?>
@@ -48,9 +48,7 @@
         <label class="form-label">Description</label>
         <textarea class="form-control" name="description"><?php echo $category['description'] ?></textarea>
 
-        <label class="form-label">Icône</label>
-        <input type="text" class="form-control" name="icone" value="<?php echo $category['icone'] ?>">
-
+    
         <input type="submit" value="Modifier catégorie" class="btn btn-primary my-2" name="modifier">
     </form>
 </div>

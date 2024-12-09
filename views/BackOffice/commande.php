@@ -25,7 +25,7 @@ $commande = $sqlState->fetch(PDO::FETCH_ASSOC);
             <th>#ID</th>
             <th>Client</th>
             <th>Total</th>
-            <th>Date</th>
+           
             <th>Opérations</th>
         </tr>
         </thead>
@@ -42,7 +42,7 @@ $commande = $sqlState->fetch(PDO::FETCH_ASSOC);
             <td><?php echo $commande['id'] ?></td>
             <td><?php echo $commande['login'] ?></td>
             <td><?php echo $commande['total'] ?> <i class="fa fa-solid fa-dollar"></i></td>
-            <td><?php echo $commande['date_creation'] ?></td>
+            
             <td>
                 <?php if ($commande['valide'] == 0) : ?>
                     <a class="btn btn-success btn-sm" href="valider_commande.php?id=<?= $commande['id']?>&etat=1">Valider la commande</a>
