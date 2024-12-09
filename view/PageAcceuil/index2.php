@@ -151,6 +151,8 @@
 		<!-- top-area End -->
 
 		<!--welcome-hero start -->
+
+		<!--
 		<section id="home" class="welcome-hero">
 			<div class="container">
 				<div class="welcome-hero-txt">
@@ -194,8 +196,40 @@
 				</div>
 			</div>
 
-		</section><!--/.welcome-hero-->
+		</section>-->
+
+		<!--/.welcome-hero-->
 		<!--welcome-hero end -->
+		<section id="home" class="welcome-hero">
+    <div class="container">
+        <div class="welcome-hero-txt">
+            <h2>Best place to find and explore <br> that all you need</h2>
+            <p>
+                Find the best place, restaurant, hotel, real estate, and many more things in just one click.
+            </p>
+        </div>
+        <div class="welcome-hero-serch-box">
+            <div class="welcome-hero-form">
+                <form method="POST" action="search.php">
+                    <div class="single-welcome-hero-form">
+                        <h3>What?</h3>
+                        <input type="text" name="placeType" placeholder="Ex: place, restaurant, food, automobile" />
+                    </div>
+                    <div class="single-welcome-hero-form">
+                        <h3>Location</h3>
+                        <input type="text" name="location" placeholder="Ex: London, New York, Rome" />
+                    </div>
+                    <div class="welcome-hero-serch">
+                        <button type="submit" class="welcome-hero-btn">
+                            Search <i data-feather="search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 		<!--list-topics start -->
 		<section id="list-topics" class="list-topics">

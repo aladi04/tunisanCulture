@@ -284,6 +284,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #ff545a;}
     border-radius: 3px;
     width: 85%;
 }
+/*
 .single-welcome-hero-form {
     position: relative;
     display: flex;
@@ -305,7 +306,23 @@ nav.navbar.bootsnav .navbar-toggle i{color: #ff545a;}
     color: #859098;
     text-transform: capitalize;
     font-weight: 500;
+}*/
+.single-welcome-hero-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff; /* Ensure all input fields have a white background */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    font-size: 16px;
 }
+
+.single-welcome-hero-form input:focus {
+    outline: none;
+    border-color: #007bff; /* Optional: Highlight border on focus */
+}
+/*
 .welcome-hero-form-icon {
     position: absolute;
     top: 20px;
@@ -329,7 +346,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #ff545a;}
     -ms-transition: 0.3s linear; 
     -o-transition: 0.3s linear; 
     transition: 0.3s linear;
-}
+}*/
 .welcome-hero-btn:hover{/*background: #fd4043;*/background: #f43032;}
 
 .welcome-hero-btn svg {
