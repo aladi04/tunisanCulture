@@ -1,5 +1,5 @@
 <?php
-require_once 'database.php';
+require_once 'Database.php';
 
 class User {
     private $conn;
@@ -9,23 +9,14 @@ class User {
         $this->conn = $database->getConnection();
     }
 
-    public function createUser($email, $phone_number, $username, $password) {
-        $query = "INSERT INTO users (email, phone_number, username, password) VALUES (:email, :phone_number, :username, :password)";
+    public function login($username, $password) {
+        $query = "SELECT * FROM users WHERE username = :username AND password = :password";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':phone_number', $phone_number);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
         $stmt->execute();
-
-        return $this->conn->lastInsertId();
-    }
-
-    public function getAllUsers() {
-        $query = "SELECT * FROM users";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user !== false;
     }
 }
 ?>

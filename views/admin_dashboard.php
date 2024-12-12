@@ -4,17 +4,29 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
     header('Location: admin_login.php');
     exit();
 }
+
+require_once '../controllers/TourController.php';
+require_once '../controllers/ProgramController.php';
+require_once '../controllers/ReservationController.php';
+
+$tourController = new TourController();
+$programController = new ProgramController();
+$reservationController = new ReservationController();
+
+$tours = $tourController->showTours();
+$programs = $programController->showPrograms();
+$reservations = $reservationController->showReservations();
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.0">
+    <link rel="stylesheet" type="text/css" href="../style.css?v=1.0">
 </head>
 <body>
     <div class="header">
-        <img src="assets/logo.png" alt="Site Logo">
+        <img src="../assets/logo.png" alt="Site Logo">
         <h1>TunisiaTrésor</h1>
         <div class="dashboard">
             <a href="admin_manage_tours.php?action=add_tour">Add Tour</a>
@@ -61,6 +73,20 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
                     <h2 class="unicode-text">Delete Program</h2>
                     <a href="admin_manage_programs.php?action=delete_program" class="unicode-text">Delete Program</a>
                 </div>
+            </div>
+            
+            <h1 class="unicode-text">Manage Reservations</h1>
+            <div class="gallery">
+                <?php if (!empty($reservations)) { foreach ($reservations as $reservation) { ?>
+                    <div class="gallery-item">
+                        <h2 class="unicode-text">Reservation ID: <?php echo isset($reservation['id']) ? $reservation['id'] : 'N/A'; ?></h2>
+                        <p>Tour ID: <?php echo isset($reservation['tour_id']) ? $reservation['tour_id'] : 'N/A'; ?></p>
+                        <p>Program ID: <?php echo isset($reservation['program_id']) ? $reservation['program_id'] : 'N/A'; ?></p>
+                        <p>User Email: <?php echo isset($reservation['email']) ? $reservation['email'] : 'N/A'; ?></p>
+                        <p>Phone Number: <?php echo isset($reservation['phone_number']) ? $reservation['phone_number'] : 'N/A'; ?></p>
+                        <p>Reservation Date: <?php echo isset($reservation['reservation_date']) ? $reservation['reservation_date'] : 'N/A'; ?></p>
+                    </div>
+                <?php }} else { echo "<p>No reservations available.</p>"; } ?>
             </div>
         </div>
     </div>
