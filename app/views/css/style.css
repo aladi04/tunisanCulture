@@ -1,0 +1,14 @@
+:root {
+    /*  --primary: #34AD54;*/
+    --primary: #eff61f;
+   
+    --secondary: #FF9933;
+    --light: #F6FFF2;
+    --dark: #263A4F;
+  }
+  
+  .btn {
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+
+  }
