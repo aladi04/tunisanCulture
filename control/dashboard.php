@@ -3,7 +3,7 @@ include '../connect.php';
 include "../model/user.php";
 
 function showUser($pdo){
-    $sql = "SELECT * FROM `user`";
+    $sql = "SELECT * FROM `user` ORDER BY `name` ASC";
     $stm = $pdo->prepare($sql);
     $stm->execute();
     $users=$stm->fetchAll();
