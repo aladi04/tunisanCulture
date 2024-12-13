@@ -4,10 +4,7 @@
     <div class="col-md-8">
         <h2>Upcoming Events</h2>
     </div>
-    <div class="col-md-4">
-        <a class="btn btn-primary pull-right" href="<?php echo URLROOT; ?>/events/add"><i class="fa fa-plus"></i> Add
-            Event</a>
-    </div>
+   
     <div class="col-md-4">
     <form action="<?php echo URLROOT; ?>/events/index" method="GET">
     <input type="text" name="search" value="<?php echo $data['searchTerm']; ?>" placeholder="Rechercher un événement">

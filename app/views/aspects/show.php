@@ -17,18 +17,6 @@
     </p>
 
 
-    <div class="row">
-        <div class="col">
-            <a href="<?php echo URLROOT ;?>/aspects/edit/<?php echo $data['aspect']->id_aspect ;?>"
-                class="btn btn-dark btn-block">Edit</a>
-        </div>
-        <div class="col">
-            <form class="pull-right"
-                action="<?php echo URLROOT ;?>/aspects/delete/<?php echo $data['aspect']->id_aspect; ?>" method="post">
-                <input type="submit" class="btn btn-danger btn-block" value="Delete">
-            </form>
-        </div>
-    </div>
 
 </div>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

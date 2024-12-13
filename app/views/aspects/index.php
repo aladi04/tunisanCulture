@@ -4,10 +4,7 @@
     <div class="col-md-8">
         <h2>Aspects of Our Projects</h2>
     </div>
-    <div class="col-md-4">
-        <a class="btn btn-primary pull-right" href="<?php echo URLROOT; ?>/aspects/add"><i class="fa fa-plus"></i> Add
-            Aspect</a>
-    </div>
+ 
    
     <div class="col-md-4">
     <form method="GET" action="<?php echo URLROOT; ?>/aspects/index">
