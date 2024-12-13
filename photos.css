@@ -1,0 +1,11 @@
+.transport {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .transport-image {
+    max-width: 200px;
+    margin-top: 10px;
+    display: block;
+  }
+  
