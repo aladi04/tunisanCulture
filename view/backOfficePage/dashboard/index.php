@@ -275,15 +275,15 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="prod.php">
                 <svg class="bi"><use xlink:href="#cart"/></svg>
                 Products
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="admin_dashboard.php">
                 <svg class="bi"><use xlink:href="#people"/></svg>
-                Customers
+                Tours
               </a>
             </li>
             <li class="nav-item">

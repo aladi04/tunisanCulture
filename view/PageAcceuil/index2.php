@@ -133,8 +133,8 @@
 			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 			                    <li class=" scroll active"><a href="#home">home</a></li>
 			                    <li class="scroll"><a href="#works">how it works</a></li>
-			                    <li class="scroll"><a href="#explore">Products</a></li>
-			                    <li class="scroll"><a href="#reviews">review</a></li>
+			                    <li class><a href="../front/index.php">Products</a></li>
+			                    <li class><a href="index.php">Tours</a></li>
 			                    <li class="scroll"><a href="#blog">blog</a></li>
 			                    <li><a href="../abc/index.php<?php echo isset($_SESSION['email']) ? '?email=' . urlencode($_SESSION['email']) : ''; ?>">
 									Profile
